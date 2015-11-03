@@ -1,0 +1,33 @@
+html, body, div, article, header, nav, ul, ol, li, a, form,
+legend, input, label, p, img, textarea,
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; padding: 0;
+  list-style: none;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+html, body {
+	background: #fff;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	transition: background 0.5s;
+}
+
+.btn {
+	width: 300px;
+	margin: 100px auto 0 auto;
+	cursor: pointer;
+}
