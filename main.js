@@ -26,17 +26,21 @@ app.on('ready', function() {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 700,
+    'min-width' : 650,
     'title-bar-style': 'hidden-inset'
   });
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+
+  // mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadUrl('file://' + __dirname + '/src/html/image-processing.html');
 
   var page = mainWindow.webContents;
 
   page.on('dom-ready', function() {
-    page.insertCSS(fs.readFileSync(path.join(__dirname, '_css', 'main.css'), 'utf-8'));
+    page.insertCSS(fs.readFileSync(path.join(__dirname, 'src', '_css', 'main.css'), 'utf-8'));
     mainWindow.show();
+    mainWindow.setPosition(20, 40);
   });
 
   mainWindow.on('closed', function() {

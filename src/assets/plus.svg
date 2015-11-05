@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="325px" height="325px" viewBox="0 0 325 325" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+    <title>plus</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Image-Upload-Default" transform="translate(-395.000000, -258.000000)" fill="#D8D8D8">
+            <path d="M540,403 L412.994588,403 C403.053988,403 395,411.058875 395,421 C395,430.943311 403.056452,439 412.994588,439 L540,439 L540,565.005412 C540,574.946012 548.058875,583 558,583 C567.943311,583 576,574.943548 576,565.005412 L576,439 L702.005412,439 C711.946012,439 720,430.941125 720,421 C720,411.056689 711.943548,403 702.005412,403 L576,403 L576,275.994588 C576,266.053988 567.941125,258 558,258 C548.056689,258 540,266.056452 540,275.994588 L540,403 Z" id="plus"></path>
+        </g>
+    </g>
+</svg>

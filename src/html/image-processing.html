@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Processing</title>
+</head>
+<body>
+
+	<div class='control-bar'>
+
+	</div>
+
+	<div class='area-wrap'>
+
+		<div class='area portrait-full' id='image-to-analyse'>
+			<img src="../assets/example-img.png" alt="">
+		</div>
+
+    <div class='resize-bar' id='resize-vert'></div>
+
+		<div class="column-container">
+		  <div class='area landscape' id='text-passage' contenteditable>
+				<p>
+					The quick brown fox jumps over the lazy dog.
+				</p>
+			</div>
+
+      <div class='resize-bar' id='resize-hoz'></div>
+
+			<div class='area landscape' id='glyph-set'>
+        <span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+				<span>abcdefghijklmnopqrstuvwxyz</span>
+        <span>0123456789</span>
+        <span>.................</span>
+			</div>
+		</div>
+	</div>
+
+<script>
+(function() {
+
+var resizeHoz = document.getElementById('resize-hoz');
+var resizeVert = document.getElementById('resize-vert');
+
+resizeHoz.addEventListener('mousedown', resize, false);
+// resizeVert.addEventListener('mousedown', resize, false);
+
+console.log(resizeHoz);
+
+function resize(e) {
+    var src = e.target;
+    var next = src.nextElementSibling;
+    var prev = src.previousElementSibling;
+    var startY = e.clientY;
+
+    var lastPointerY = e.clientY;
+
+    nextStartWidth = parseInt(getComputedStyle(next).width, 10);
+    nextStartHeight = parseInt(getComputedStyle(next).height, 10);
+    prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
+    prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
+
+    document.documentElement.addEventListener('mousemove', move, false);
+    document.documentElement.addEventListener('mouseup', stop, false);
+
+    console.log(prev, next);
+    console.log(nextStartHeight);
+
+    function move(e) {
+
+      // moving up.
+      if ( e.clientY <= lastPointerY ) {
+        prev.style.height = (prevStartHeight + e.clientY - startY) + 'px';
+        next.style.height = (nextStartHeight + (Math.abs(e.clientY) - startY)) + 'px';
+
+        console.log(next.style.height);
+      } else { // moving down.
+        // prev.style.height = (prevStartHeight + e.clientY - startY) + 'px';
+        // next.style.height = (nextStartHeight - e.clientY + startY) + 'px';
+      }
+
+      lastPointerY = e.clientY;
+    }
+
+    function stop(e) {
+      console.log("stopped");
+      document.documentElement.removeEventListener('mousemove', move, false);
+      document.documentElement.removeEventListener('mouseup', stop, false);
+    }
+}
+
+}())
+</script>
+</body>
+</html>
