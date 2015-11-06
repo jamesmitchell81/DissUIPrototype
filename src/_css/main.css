@@ -84,23 +84,21 @@ body {
 }
 
 #text-passage p {
-  border: 1px solid #000;
   cursor: text;
   margin: 30px;
   font-size: calc(4vw + 4vh);
+  word-wrap: break-word;
   width: calc(100% - (30px * 2));
   height: calc(100% - (30px * 2));
 }
 
 #glyph-set {
-  /*display: none;*/
-  padding: 30px;
-  border: 1px solid #000;
+
 }
 
-#glyph-set span {
+#glyph-set p {
   font-size: calc(3vw + 3vh);
-  display: block;
+  margin: 30px;
   word-wrap: break-word;
 }
 

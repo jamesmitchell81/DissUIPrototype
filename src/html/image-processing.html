@@ -27,10 +27,7 @@
       <div class='resize-bar' id='resize-hoz'></div>
 
 			<div class='area landscape' id='glyph-set'>
-        <span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-				<span>abcdefghijklmnopqrstuvwxyz</span>
-        <span>0123456789</span>
-        <span>.................</span>
+        <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 .................</p>
 			</div>
 		</div>
 	</div>
@@ -44,45 +41,31 @@ var resizeVert = document.getElementById('resize-vert');
 resizeHoz.addEventListener('mousedown', resize, false);
 // resizeVert.addEventListener('mousedown', resize, false);
 
-console.log(resizeHoz);
-
 function resize(e) {
     var src = e.target;
     var next = src.nextElementSibling;
     var prev = src.previousElementSibling;
+    var container = src.parentElement;
     var startY = e.clientY;
 
-    var lastPointerY = e.clientY;
-
-    nextStartWidth = parseInt(getComputedStyle(next).width, 10);
-    nextStartHeight = parseInt(getComputedStyle(next).height, 10);
-    prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
-    prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
+    var nextStartWidth = parseInt(getComputedStyle(next).width, 10);
+    // var nextStartHeight = parseInt(getComputedStyle(next).height, 10);
+    var prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
+    var prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
+    var containerHeight = parseInt(getComputedStyle(container).height, 10);
 
     document.documentElement.addEventListener('mousemove', move, false);
     document.documentElement.addEventListener('mouseup', stop, false);
 
-    console.log(prev, next);
-    console.log(nextStartHeight);
-
     function move(e) {
+      var prevNewHeight = (prevStartHeight + (e.clientY - startY));
+      prev.style.height = prevNewHeight + 'px';
+      next.style.height = (containerHeight - prevNewHeight) + 'px';
 
-      // moving up.
-      if ( e.clientY <= lastPointerY ) {
-        prev.style.height = (prevStartHeight + e.clientY - startY) + 'px';
-        next.style.height = (nextStartHeight + (Math.abs(e.clientY) - startY)) + 'px';
-
-        console.log(next.style.height);
-      } else { // moving down.
-        // prev.style.height = (prevStartHeight + e.clientY - startY) + 'px';
-        // next.style.height = (nextStartHeight - e.clientY + startY) + 'px';
-      }
-
-      lastPointerY = e.clientY;
+      // update children.
     }
 
     function stop(e) {
-      console.log("stopped");
       document.documentElement.removeEventListener('mousemove', move, false);
       document.documentElement.removeEventListener('mouseup', stop, false);
     }
