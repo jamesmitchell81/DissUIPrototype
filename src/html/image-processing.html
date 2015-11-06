@@ -15,7 +15,7 @@
 			<img src="../assets/example-img.png" alt="">
 		</div>
 
-    <div class='resize-bar' id='resize-vert'></div>
+    <div class='resize-bar' id='resize-vert' data-resize-direction='x'></div>
 
 		<div class="column-container">
 		  <div class='area landscape' id='text-passage' contenteditable>
@@ -24,7 +24,7 @@
 				</p>
 			</div>
 
-      <div class='resize-bar' id='resize-hoz'></div>
+      <div class='resize-bar' id='resize-hoz' data-resize-direction='y'></div>
 
 			<div class='area landscape' id='glyph-set'>
         <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 .................</p>
@@ -39,29 +39,68 @@ var resizeHoz = document.getElementById('resize-hoz');
 var resizeVert = document.getElementById('resize-vert');
 
 resizeHoz.addEventListener('mousedown', resize, false);
-// resizeVert.addEventListener('mousedown', resize, false);
+resizeVert.addEventListener('mousedown', resize, false);
 
 function resize(e) {
     var src = e.target;
     var next = src.nextElementSibling;
     var prev = src.previousElementSibling;
     var container = src.parentElement;
-    var startY = e.clientY;
+    var prevStart, containerSize, clientStart;
+    var direction = src.getAttribute('data-resize-direction').toLowerCase();
 
-    var nextStartWidth = parseInt(getComputedStyle(next).width, 10);
-    // var nextStartHeight = parseInt(getComputedStyle(next).height, 10);
-    var prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
-    var prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
-    var containerHeight = parseInt(getComputedStyle(container).height, 10);
+    if ( direction !== 'x' && direction !==  'y' ) return;
+
+    console.log(direction);
+
+    if ( direction === 'y' ) {
+      clientStart = e.clientY;
+      prevStart = parseInt(getComputedStyle(prev).height, 10);
+      containerSize = parseInt(getComputedStyle(container).height, 10);
+    } else if ( direction === 'x' ) {
+      clientStart = e.clientX;
+      prevStart = parseInt(getComputedStyle(prev).width, 10);
+      containerSize = parseInt(getComputedStyle(container).width, 10);
+    }
 
     document.documentElement.addEventListener('mousemove', move, false);
     document.documentElement.addEventListener('mouseup', stop, false);
 
     function move(e) {
-      var prevNewHeight = (prevStartHeight + (e.clientY - startY));
-      prev.style.height = prevNewHeight + 'px';
-      next.style.height = (containerHeight - prevNewHeight) + 'px';
+      var prevNew = (prevStart + (clientCurrent(e) - clientStart));
+      prev.style.height = prevNew + 'px';
+      next.style.height = (containerSize - prevNew) + 'px';
+      // update children.
+    }
 
+    function clientCurrent(e) {
+      return direction === 'y' ? e.clientY : e.clientX;
+    }
+
+    function stop(e) {
+      document.documentElement.removeEventListener('mousemove', move, false);
+      document.documentElement.removeEventListener('mouseup', stop, false);
+    }
+}
+
+function resize_Vert(e) {
+    var src = e.target;
+    var next = src.nextElementSibling;
+    var prev = src.previousElementSibling;
+    var container = src.parentElement;
+    var startX = e.clientX;
+
+    var prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
+    var prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
+    var containerWidth = parseInt(getComputedStyle(container).width, 10);
+
+    document.documentElement.addEventListener('mousemove', move, false);
+    document.documentElement.addEventListener('mouseup', stop, false);
+
+    function move(e) {
+      var prevNewWidth = (prevStartWidth + (e.clientX - startX));
+      prev.style.width = prevNewWidth + 'px';
+      next.style.width = (containerWidth - prevNewWidth) + 'px';
       // update children.
     }
 
