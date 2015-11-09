@@ -51,8 +51,6 @@ function resize(e) {
 
     if ( direction !== 'x' && direction !==  'y' ) return;
 
-    console.log(direction);
-
     if ( direction === 'y' ) {
       clientStart = e.clientY;
       prevStart = parseInt(getComputedStyle(prev).height, 10);
@@ -68,40 +66,18 @@ function resize(e) {
 
     function move(e) {
       var prevNew = (prevStart + (clientCurrent(e) - clientStart));
-      prev.style.height = prevNew + 'px';
-      next.style.height = (containerSize - prevNew) + 'px';
+      if ( direction === 'y' ) {
+        prev.style.height = prevNew + 'px';
+        next.style.height = (containerSize - prevNew) + 'px';
+      } else if ( direction === 'x') {
+        prev.style.width = prevNew + 'px';
+        next.style.width = (containerSize - prevNew) + 'px';
+      }
       // update children.
     }
 
     function clientCurrent(e) {
       return direction === 'y' ? e.clientY : e.clientX;
-    }
-
-    function stop(e) {
-      document.documentElement.removeEventListener('mousemove', move, false);
-      document.documentElement.removeEventListener('mouseup', stop, false);
-    }
-}
-
-function resize_Vert(e) {
-    var src = e.target;
-    var next = src.nextElementSibling;
-    var prev = src.previousElementSibling;
-    var container = src.parentElement;
-    var startX = e.clientX;
-
-    var prevStartWidth = parseInt(getComputedStyle(prev).width, 10);
-    var prevStartHeight = parseInt(getComputedStyle(prev).height, 10);
-    var containerWidth = parseInt(getComputedStyle(container).width, 10);
-
-    document.documentElement.addEventListener('mousemove', move, false);
-    document.documentElement.addEventListener('mouseup', stop, false);
-
-    function move(e) {
-      var prevNewWidth = (prevStartWidth + (e.clientX - startX));
-      prev.style.width = prevNewWidth + 'px';
-      next.style.width = (containerWidth - prevNewWidth) + 'px';
-      // update children.
     }
 
     function stop(e) {
